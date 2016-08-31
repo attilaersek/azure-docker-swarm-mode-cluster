@@ -291,16 +291,16 @@
         "sshKeyPath": "[concat('/home/', variables('adminUsername'), '/.ssh/authorized_keys')]",
         "disablePasswordAuthentication": "true",
         "linuxConfiguration": {
-                "disablePasswordAuthentication": "[variables('disablePasswordAuthentication')]",
-                "ssh": {
-                    "publicKeys": [
-                        {
-                            "path": "[variables('sshKeyPath')]",
-                            "keyData": "[variables('sshRSAPublicKey')]"
-                        }
-                    ]
-                }
-            },
+            "disablePasswordAuthentication": "[variables('disablePasswordAuthentication')]",
+            "ssh": {
+                "publicKeys": [
+                    {
+                        "path": "[variables('sshKeyPath')]",
+                        "keyData": "[variables('sshRSAPublicKey')]"
+                    }
+                ]
+            }
+        },
         "orchestratorName": "swarm",
         "masterPublicIPAddressName": "[concat(variables('orchestratorName'), '-master-ip-', variables('masterEndpointDNSNamePrefix'), '-', variables('nameSuffix'))]",
         "agentPublicIPAddressName": "[concat(variables('orchestratorName'), '-agent-ip-', variables('agentEndpointDNSNamePrefix'), '-', variables('nameSuffix'))]",
@@ -534,7 +534,7 @@
                 "storageAccountType": "Premium_LRS"
             }
         },
-        "cloudConfigScript": "H4sICCraw1cAA2Nsb3VkQ29uZmlnU2NyaXB0LnNoAM1YW0/bSBR+9684NVEv2jpOoKirorBCQJdoC0EJ7cOuqmZij8lsnJngGXPZNv99z1yc2InTUhakLRXYczvfOd+5jbeehSPGwxGRY8/bevg/bwsOBU/YZZ5RGNyQbPqfTvMkVRDceh6NxgJ8qUimGL8EqU+GyEkiignuezFR1JtJILj+qHf4x3H/y2Hv9Lw3OP7y6bg/6PbOOn67+Wuz5a+oiKDPSUamVNFMrkx53cHpweDiuN9pfG3Pve75wdGRft6ee3a8tRjamXsHf37sH38cmNVv5h7KvuieDS4OPnwYHPa75xcf+12c2Z17n07PDk6PO8OxkIqj5GGt1Y01p1PB4X3OI62lrF3mUS7R4Af/4K8zqm5ENnn5yvvqAWyBnQI1pqCFgZYGTEJGpUivySiluEzP9M0APaEkVeO7ThuHE5EBA8bha7vZbG+35nsQCxy3G6BhtTADLIG/oPEbBPQKWvDZjKFMbh40jkJTGBMJI0o5np7zWJOIlObULaxB0nJT1geqilgtqPTdmlFGycQ8J8z8kSmlM9DKxIJrIRbouhgIOHXIF7itxKW0WFAJXKhC7GsgI2E9knF0zjS1OOgtU0YmglglgVt+QP+SOOnev2P2pdVvLnU49MKYXoc8T1MYKzV7F+rQvWxGYvqoTKwAW2eh0ASdaWwX/YiF1ioNVRmbKVgRpylwIjdRwBKbHezLDMiSmG3P4VoPDlwYEV7Qey92VoLCGDZg/3cmnoIItFwpNozR4xjf5MM5mtdktk31CZNlIVrSNNEMHZ0NNi0+wdRs8vawxNrQ1ZlGMVukOB++gcxjAYriOgIhVVGoN8p1NIija7WEIxFNaLa+wolxy7RdiGXdlDP9HpudWKicwexJLqlXPbC1mh8ClTHMU2/wKaMquwvwYJ7RJJc0xrEbwpQZ77R3IbjqBSaLSEwjuLtpBetkolUeP6ofW62tKoUnICSZRxF6SYIJ7f4ZZO4ppgtZ2TyeoQjVzKYCNSW/OzNCY1GXnelfuP6gd34x6PjBCeSc3aIFwmuShVnOQ2cGiX8Ap1tN8/Nue+ftrv+izhlimpA8VW5jDcMOChp2JiT1q8Qe2tGn5pepcT7S3DqYoUMTZjSlRFKJ4zc8FSQOG/UdlNsYuI3BMLehI4eLx+kQ9iHMZRamIiKp6Suru57AqaoCnsK5HEVeNNbO9cvtD1S0voiueM0iWpCP+Ul3sEW/VgnqUjEiqtiwTOgGmh7bWIp2ln5iZBdH8EQ8qsGrMFq1sb1Wh8qIsEUPyM92ChWpm+vTEkCpNPnVYuKSxU9eTDCtR4ubjXzAzQZzudGkuFAYItrwea/QoaiwBnxsmnQCUyKVLgTODn7DXjd86OBz5Qbil46qHIb/ddlOWIYdjj0PizUafnmVsjQ5fuzlinGmcw2JrymWbgx1XczBideJ8C3OpgxP4+tTWpvUBXoVCcGYQDvGJLsr6QZW6ITedXz7jj64GGpbB9nYd5V2N146JTBpV81jcrfT7W/BeKDEBF18Sji51OuvXrmzVuJkrxwkVVytxahx4z33mjBw5uTlVFfaWfLfSgxaU0UiT2P+Qml/4zRSoITFveyjmkVcLZqlRQBVSNSK6oJhVG0sxK9b5q0NEUdanSdyQDtxpQVXuVplajNPD2dJ930lkr5HUR1BJXosOdW7YC0xK5F0f1Kqd4wH0gHg6bujBVj3GQGeYQKImdQX+BhD36skkaKMI6rXprecsGiio10kCczMTce1qDLK2MywuvgABEEEfqXV2G7du9eoB/sN/Wicz0oy9rFH0M1WKi5Dorv7MEpznQ6CkRBKqozMAg3U4WziOtjef96G576xjNVzlgld3REi1kyKeopkoZH9EmQ+ChUUTmcpVbopqPt89C/XDS4uAxMAAA==",
+        "cloudConfigScript": "H4sIAAAAAAAAA81YW0/bSBR+9684NVEv2jpOoKirorBCQJdoC0EJ7cOuqmZij8lsnJngGXPZNv99z1yc2InTUhakLRXYczvfOd+5jbeehSPGwxGRY8/bevg/bwsOBU/YZZ5RGNyQbPqfTvMkVRDceh6NxgJ8qUimGL8EqU+GyEkiignuezFR1JtJILj+qHf4x3H/y2Hv9Lw3OP7y6bg/6PbOOn67+Wuz5a+oiKDPSUamVNFMrkx53cHpweDiuN9pfG3Pve75wdGRft6ee3a8tRjamXsHf37sH38cmNVv5h7KvuieDS4OPnwYHPa75xcf+12c2Z17n07PDk6PO8OxkIqj5GGt1Y01p1PB4X3OI62lrF3mUS7R4Af/4K8zqm5ENnn5yvvqAWyBnQI1pqCFgZYGTEJGpUivySiluEzP9M0APaEkVeO7ThuHE5EBA8bha7vZbG+35nsQCxy3G6BhtTADLIG/oPEbBPQKWvDZjKFMbh40jkJTGBMJI0o5np7zWJOIlObULaxB0nJT1geqilgtqPTdmlFGycQ8J8z8kSmlM9DKxIJrIRbouhgIOHXIF7itxKW0WFAJXKhC7GsgI2E9knF0zjS1OOgtU0YmglglgVt+QP+SOOnev2P2pdVvLnU49MKYXoc8T1MYKzV7F+rQvWxGYvqoTKwAW2eh0ASdaWwX/YiF1ioNVRmbKVgRpylwIjdRwBKbHezLDMiSmG3P4VoPDlwYEV7Qey92VoLCGDZg/3cmnoIItFwpNozR4xjf5MM5mtdktk31CZNlIVrSNNEMHZ0NNi0+wdRs8vawxNrQ1ZlGMVukOB++gcxjAYriOgIhVVGoN8p1NIija7WEIxFNaLa+wolxy7RdiGXdlDP9HpudWKicwexJLqlXPbC1mh8ClTHMU2/wKaMquwvwYJ7RJJc0xrEbwpQZ77R3IbjqBSaLSEwjuLtpBetkolUeP6ofW62tKoUnICSZRxF6SYIJ7f4ZZO4ppgtZ2TyeoQjVzKYCNSW/OzNCY1GXnelfuP6gd34x6PjBCeSc3aIFwmuShVnOQ2cGiX8Ap1tN8/Nue+ftrv+izhlimpA8VW5jDcMOChp2JiT1q8Qe2tGn5pepcT7S3DqYoUMTZjSlRFKJ4zc8FSQOG/UdlNsYuI3BMLehI4eLx+kQ9iHMZRamIiKp6Suru57AqaoCnsK5HEVeNNbO9cvtD1S0voiueM0iWpCP+Ul3sEW/VgnqUjEiqtiwTOgGmh7bWIp2ln5iZBdH8EQ8qsGrMFq1sb1Wh8qIsEUPyM92ChWpm+vTEkCpNPnVYuKSxU9eTDCtR4ubjXzAzQZzudGkuFAYItrwea/QoaiwBnxsmnQCUyKVLgTODn7DXjd86OBz5Qbil46qHIb/ddlOWIYdjj0PizUafnmVsjQ5fuzlinGmcw2JrymWbgx1XczBideJ8C3OpgxP4+tTWpvUBXoVCcGYQDvGJLsr6QZW6ITedXz7jj64GGpbB9nYd5V2N146JTBpV81jcrfT7W/BeKDEBF18Sji51OuvXrmzVuJkrxwkVVytxahx4z33mjBw5uTlVFfaWfLfSgxaU0UiT2P+Qml/4zRSoITFveyjmkVcLZqlRQBVSNSK6oJhVG0sxK9b5q0NEUdanSdyQDtxpQVXuVplajNPD2dJ930lkr5HUR1BJXosOdW7YC0xK5F0f1Kqd4wH0gHg6bujBVj3GQGeYQKImdQX+BhD36skkaKMI6rXprecsGiio10kCczMTce1qDLK2MywuvgABEEEfqXV2G7du9eoB/sN/Wicz0oy9rFH0M1WKi5Dorv7MEpznQ6CkRBKqozMAg3U4WziOtjef96G576xjNVzlgld3REi1kyKeopkoZH9EmQ+ChUUTmcpVbopqPt89C/XDS4uAxMAAA==",
         "cloudConfigScriptLocation": "/opt/azure/containers/configure-swarm-cluster.sh"
     },
     "resources": [
@@ -1033,7 +1033,7 @@
                 "[variables('vnetID')]",
                 "[variables('diagnosticsStorageAccountName')]",
                 "[concat('Microsoft.Compute/virtualMachines/', concat(variables('masterVMNamePrefix'), '0'))]"
-            ]            
+            ]
         }
     ],
     "outputs": {

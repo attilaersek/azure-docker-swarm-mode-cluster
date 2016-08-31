@@ -24,3 +24,7 @@ TBD
 ## Connecting the Cluster
 
 TBD
+
+# Contribution guide
+
+## Updating the deployment scripts
