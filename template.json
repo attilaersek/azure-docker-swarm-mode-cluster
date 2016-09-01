@@ -310,13 +310,13 @@
         "osImageVersion": "[variables('linuxVersion')]",
         "virtualNetworkName": "[concat(variables('orchestratorName'), '-vnet-', variables('nameSuffix'))]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "masterSubnetName": "[concat(variables('orchestratorName'), '-masterSubnet')]",
+        "vnetAddressPrefix": "10.0.0.0/16",
+        "masterSubnetName": "[concat(variables('orchestratorName'), '-master-subnet')]",
         "masterSubnetRef": "[concat(variables('vnetID'),'/subnets/',variables('masterSubnetName'))]",
-        "masterAddressPrefix": "172.16.0.0/24",
-        "subnetName": "[concat(variables('orchestratorName'), '-subnet')]",
-        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-        "addressPrefix": "10.0.0.0/8",
-        "subnetPrefix": "10.0.0.0/11",
+        "masterSubnetPrefix": "10.0.0.0/24",
+        "workerSubnetName": "[concat(variables('orchestratorName'), '-worker-subnet')]",
+        "workerSubnetRef": "[concat(variables('vnetID'),'/subnets/',variables('workerSubnetName'))]",
+        "workerSubnetPrefix": "10.0.1.0/24",
         "storageAccountPrefixes": [
             "0",
             "6",
@@ -570,21 +570,20 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[variables('addressPrefix')]",
-                        "[variables('masterAddressPrefix')]"
+                        "[variables('vnetAddressPrefix')]"
                     ]
                 },
                 "subnets": [
                     {
-                        "name": "[variables('subnetName')]",
+                        "name": "[variables('workerSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[variables('subnetPrefix')]"
+                            "addressPrefix": "[variables('workerSubnetPrefix')]"
                         }
                     },
                     {
                         "name": "[variables('masterSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[variables('masterAddressPrefix')]"
+                            "addressPrefix": "[variables('masterSubnetPrefix')]"
                         }
                     }
                 ]
@@ -672,7 +671,7 @@
                         "name": "ipConfigNode",
                         "properties": {
                             "privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "[concat(split(variables('masterAddressPrefix'),'0/24')[0], copyIndex(variables('masterFirstAddr')))]",
+                            "privateIPAddress": "[concat(split(variables('masterSubnetPrefix'),'0/24')[0], copyIndex(variables('masterFirstAddr')))]",
                             "subnet": {
                                 "id": "[variables('masterSubnetRef')]"
                             },
@@ -972,15 +971,15 @@
                     "networkProfile": {
                         "networkInterfaceConfigurations": [
                             {
-                                "name": "agentNodeNic",
+                                "name": "workerNodeNic",
                                 "properties": {
                                     "primary": true,
                                     "ipConfigurations": [
                                         {
-                                            "name": "nicipconfig",
+                                            "name": "workerNodeNicIPConfig",
                                             "properties": {
                                                 "subnet": {
-                                                    "id": "[variables('subnetRef')]"
+                                                    "id": "[variables('workerSubnetRef')]"
                                                 },
                                                 "loadBalancerBackendAddressPools": [
                                                     {
