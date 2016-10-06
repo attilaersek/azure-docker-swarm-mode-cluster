@@ -29,9 +29,6 @@
         "enableVMDiagnostics": {
             "value": true
         },
-        "setLinuxConfigurationForVMCreate": {
-            "value": 1
-        },
         "nameSuffix": {
             "value": ""
         },

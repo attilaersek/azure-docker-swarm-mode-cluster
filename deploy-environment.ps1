@@ -56,7 +56,7 @@ Function RegisterRP {
     )
 
     Write-Information "Registering resource provider '$ResourceProviderNamespace'";
-    Register-AzureRmResourceProvider -ProviderNamespace $ResourceProviderNamespace -Force;
+    Register-AzureRmResourceProvider -ProviderNamespace $ResourceProviderNamespace;
 }
 
 $ErrorActionPreference = "Stop"
