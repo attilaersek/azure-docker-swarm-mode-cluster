@@ -85,7 +85,7 @@ fi
 
 #create the agent vm
 agentNicName="swarm-agent-$agentIndex-nic"
-masterLbName="swarm-agent-lb"
+agentLbName="swarm-agent-lb"
 vnetName="swarm-vnet"
 agentSubnetName="swarm-vnet-subnet-agent"
 agentLbBEAddressPoolName="swarm-agent-lb-be-ap"
