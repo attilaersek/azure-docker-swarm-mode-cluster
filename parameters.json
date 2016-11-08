@@ -14,29 +14,8 @@
         "agentEndpointDNSNamePrefix": {
             "value": ""
         },
-        "agentCount": {
-            "value": 1
-        },
-        "masterCount": {
-            "value": 1
-        },
-        "agentVMSize": {
-            "value": "Standard_D1_v2"
-        },
-        "masterVMSize": {
-            "value": "Standard_D2_v2"
-        },
-        "enableVMDiagnostics": {
-            "value": true
-        },
         "nameSuffix": {
             "value": ""
-        },
-        "vmsPerStorageAccount": {
-            "value": 20
-        },
-        "postInstallScriptURI": {
-            "value": "disabled"
         }
     }
 }
