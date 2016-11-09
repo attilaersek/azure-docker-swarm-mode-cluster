@@ -286,7 +286,7 @@
         "workerSubnetPrefix": "172.16.1.0/24",
         "storageAccountBaseName": "[concat(uniqueString(concat(variables('masterEndpointDNSNamePrefix'),resourceGroup().location)), variables('orchestratorName'))]",
         "masterStorageAccountName": "[concat(variables('storageAccountBaseName'), '0')]",
-        "masterVMNamePrefix": "[concat(variables('orchestratorName'), '-master-', variables('nameSuffix'), '-')]",
+        "masterVMNamePrefix": "swarm-master-",
         "masterFirstAddr": 5,
         "masterAvailabilitySet": "[concat(variables('orchestratorName'), '-master-availabilitySet-', variables('nameSuffix'))]",
         "agentAvailabilitySet": "[concat(variables('orchestratorName'), '-agent-availabilitySet-', variables('nameSuffix'))]",
@@ -296,7 +296,7 @@
         "masterLbIPConfigName": "[concat(variables('orchestratorName'), '-master-lbFrontEnd-', variables('nameSuffix'))]",
         "masterLbIPConfigID": "[concat(variables('masterLbID'),'/frontendIPConfigurations/', variables('masterLbIPConfigName'))]",
         "masterLbBackendPoolName": "[concat(variables('orchestratorName'), '-master-pool-', variables('nameSuffix'))]",
-        "agentVMNamePrefix": "[concat(variables('orchestratorName'), '-agent-', variables('nameSuffix'))]",
+        "agentVMNamePrefix": "swarm-agent-",
         "agentStorageAccountName": "[concat(variables('storageAccountBaseName'), '1')]",
         "agentsLbName": "[concat(variables('orchestratorName'), '-agent-lb-', variables('nameSuffix'))]",
         "agentsLbID": "[resourceId('Microsoft.Network/loadBalancers',variables('agentsLbName'))]",
@@ -565,7 +565,7 @@
         },
         {
             "type": "Microsoft.Network/loadBalancers/inboundNatRules",
-            "name": "[concat(variables('masterLbName'), '/', 'SSH-', variables('masterVMNamePrefix'), copyIndex())]",
+            "name": "[concat(variables('masterLbName'), '/', 'SSH-', variables('masterVMNamePrefix'), copyIndex(1))]",
             "apiVersion": "[variables('networkApiVersion')]",
             "location": "[resourceGroup().location]",
             "copy": {
@@ -587,7 +587,7 @@
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[concat(variables('masterVMNamePrefix'), 'nic-', copyIndex())]",
+            "name": "[concat(variables('masterVMNamePrefix'), 'nic-', copyIndex(1))]",
             "apiVersion": "[variables('networkApiVersion')]",
             "location": "[resourceGroup().location]",
             "copy": {
@@ -611,7 +611,7 @@
                             ],
                             "loadBalancerInboundNatRules": [
                                 {
-                                    "id": "[concat(variables('masterLbID'),'/inboundNatRules/SSH-',variables('masterVMNamePrefix'),copyIndex())]"
+                                    "id": "[concat(variables('masterLbID'),'/inboundNatRules/SSH-',variables('masterVMNamePrefix'),copyIndex(1))]"
                                 }
                             ]
                         }
@@ -621,12 +621,12 @@
             "dependsOn": [
                 "[variables('masterLbID')]",
                 "[variables('vnetID')]",
-                "[concat(variables('masterLbID'),'/inboundNatRules/SSH-',variables('masterVMNamePrefix'),copyIndex())]"
+                "[concat(variables('masterLbID'),'/inboundNatRules/SSH-',variables('masterVMNamePrefix'),copyIndex(1))]"
             ]
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(variables('masterVMNamePrefix'), copyIndex())]",
+            "name": "[concat(variables('masterVMNamePrefix'), copyIndex(1))]",
             "apiVersion": "[variables('computeApiVersion')]",
             "location": "[resourceGroup().location]",
             "copy": {
@@ -641,7 +641,7 @@
                     "vmSize": "[variables('masterVMSize')]"
                 },
                 "osProfile": {
-                    "computerName": "[concat(variables('masterVMNamePrefix'), copyIndex())]",
+                    "computerName": "[concat(variables('masterVMNamePrefix'), copyIndex(1))]",
                     "adminUsername": "[variables('adminUsername')]",
                     "adminPassword": "",
                     "customData": "[variables('masterCustomData')]",
@@ -665,9 +665,9 @@
                         "version": "[variables('osImageVersion')]"
                     },
                     "osDisk": {
-                        "name": "[concat(variables('masterVMNamePrefix'), copyIndex(),'-osdisk')]",
+                        "name": "[concat(variables('masterVMNamePrefix'), copyIndex(1),'-osdisk')]",
                         "vhd": {
-                            "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('masterStorageAccountName')), variables('storageApiVersion')).primaryEndpoints.blob, 'vhds/', variables('masterVMNamePrefix'), copyIndex(), '-osdisk.vhd')]"
+                            "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('masterStorageAccountName')), variables('storageApiVersion')).primaryEndpoints.blob, 'vhds/', variables('masterVMNamePrefix'), copyIndex(1), '-osdisk.vhd')]"
                         },
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
@@ -676,7 +676,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('masterVMNamePrefix'), 'nic-', copyIndex()))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('masterVMNamePrefix'), 'nic-', copyIndex(1)))]"
                         }
                     ]
                 },
@@ -688,7 +688,7 @@
                 }
             },
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', variables('masterVMNamePrefix'), 'nic-', copyIndex())]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('masterVMNamePrefix'), 'nic-', copyIndex(1))]",
                 "[concat('Microsoft.Compute/availabilitySets/',variables('masterAvailabilitySet'))]",
                 "[variables('masterStorageAccountName')]",
                 "[variables('diagnosticsStorageAccountName')]"
@@ -696,7 +696,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('masterVMNamePrefix'), copyIndex(), '/linuxdiagnostic')]",
+            "name": "[concat(variables('masterVMNamePrefix'), copyIndex(1), '/linuxdiagnostic')]",
             "apiVersion": "[variables('computeApiVersion')]",
             "location": "[resourceGroup().location]",
             "copy": {
@@ -709,7 +709,7 @@
                 "typeHandlerVersion": "2.3",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "xmlCfg": "[base64(concat(variables('wadcfgxstart'), variables('masterVMNamePrefix'), copyIndex(), variables('wadcfgxend')))]",
+                    "xmlCfg": "[base64(concat(variables('wadcfgxstart'), variables('masterVMNamePrefix'), copyIndex(1), variables('wadcfgxend')))]",
                     "StorageAccount": "[variables('diagnosticsStorageAccountName')]"
                 },
                 "protectedSettings": {
@@ -718,7 +718,7 @@
                 }
             },
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', concat(variables('masterVMNamePrefix'), copyIndex()))]"
+                "[concat('Microsoft.Compute/virtualMachines/', concat(variables('masterVMNamePrefix'), copyIndex(1)))]"
             ]
         },
         {
